@@ -1,0 +1,120 @@
+/* Estilos generales */
+body {
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+    background-color: #f0f2f5;
+    margin: 0;
+    padding: 0;
+}
+
+/* Estilos para el carrito */
+.cart {
+    max-width: 600px;
+    margin: 20px auto;
+    padding: 20px;
+    background-color: #fff;
+    border-radius: 12px;
+    box-shadow: 0 4px 20px rgba(0, 0, 0, 0.1);
+    transition: transform 0.3s;
+}
+
+.cart:hover {
+    transform: scale(1.02);
+}
+
+.cart h2 {
+    text-align: center;
+    color: #444;
+    font-size: 2em;
+    margin-bottom: 20px;
+    font-weight: bold;
+}
+
+/* Estilos para los elementos del carrito */
+.cart div {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 15px 10px;
+    border-bottom: 1px solid #eaeaea;
+    transition: background-color 0.3s;
+}
+
+.cart div:last-child {
+    border-bottom: none;
+}
+
+.cart p {
+    margin: 0;
+    color: #555;
+    font-size: 1.2em;
+}
+
+/* Estilo para los totales */
+.cart p:last-child {
+    font-weight: bold;
+    font-size: 1.3em;
+    margin-top: 20px;
+    text-align: right;
+    color: #333;
+}
+
+/* Estilos para el icono de borrar */
+.delete-icon {
+    position: relative;
+    cursor: pointer;
+}
+
+.delete-icon img {
+    height: 35px; /* Ajusta el tamaño del icono del carrito */
+    transition: transform 0.3s;
+}
+
+.delete-icon:hover img {
+    transform: scale(1.1);
+}
+
+/* Estilo del botón */
+.cart button {
+    width: 100%;
+    padding: 10px;
+    border: none;
+    border-radius: 5px;
+    background-color: #e74c3c;
+    color: #fff;
+    font-size: 1.1em;
+    cursor: pointer;
+    transition: background-color 0.3s, transform 0.3s;
+}
+
+.cart button:hover {
+    background-color: #c0392b;
+    transform: translateY(-2px);
+}
+
+/* Efecto hover para los elementos del carrito */
+.cart div:hover {
+    background-color: #f9f9f9;
+}
+
+/* Responsive */
+@media (max-width: 768px) {
+    .cart {
+        padding: 15px;
+    }
+
+    .cart h2 {
+        font-size: 1.7em;
+    }
+
+    .cart p {
+        font-size: 1em;
+    }
+
+    .cart p:last-child {
+        font-size: 1.2em;
+    }
+
+    .cart button {
+        font-size: 0.9em;
+    }
+}

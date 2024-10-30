@@ -1,0 +1,13 @@
+<app-navbar></app-navbar>
+
+<div class="product-container">
+    <div *ngFor="let producto of productos" class="product-card">
+        <div (click)="openProductDetail(producto)">
+            <img [src]="producto.imagen" alt="{{ producto.nombre }}" />
+        </div>
+        <h2>{{ producto.nombre }}</h2>
+        <p>{{ producto.descripcion }}</p>
+        <p class="price">Precio: Q{{ producto.precio }}</p>
+        <button (click)="addToCart(producto)"><i class="fas fa-shopping-cart"></i></button>
+    </div>
+</div>

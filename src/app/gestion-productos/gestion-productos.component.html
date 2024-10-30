@@ -1,0 +1,53 @@
+<div class="gestion-productos">
+    <h2>Gestión de Productos</h2>
+
+    <!-- Formulario para agregar/editar productos -->
+    <div class="form-container">
+        <h3 *ngIf="!productoEditado">Agregar Producto</h3>
+        <h3 *ngIf="productoEditado">Editar Producto</h3>
+
+        <form (ngSubmit)="addOrEditProduct()">
+            <label for="nombre">Nombre:</label>
+            <input id="nombre" [(ngModel)]="nuevoProducto.nombre" name="nombre" required>
+
+            <label for="precio">Precio:</label>
+            <input id="precio" type="number" [(ngModel)]="nuevoProducto.precio" name="precio" required>
+
+            <label for="descripcion">Descripción:</label>
+            <textarea id="descripcion" [(ngModel)]="nuevoProducto.descripcion" name="descripcion" required></textarea>
+
+            <label for="existencia">Existencia:</label>
+            <input id="existencia" type="number" [(ngModel)]="nuevoProducto.existencia" name="existencia" required>
+
+            <label for="imagen">Imagen:</label>
+            <input type="file" id="imagen" (change)="onImageSelected($event)" accept="image/*">
+            <p *ngIf="nuevoProducto.imagen">Imagen seleccionada: {{ nuevoProducto.imagen.name }}</p>
+
+            <label for="categoria_id">Categoría:</label>
+            <select id="categoria_id" [(ngModel)]="nuevoProducto.categoria_id" name="categoria_id" required>
+                <option *ngFor="let categoria of categorias" [value]="categoria.id">{{ categoria.nombre }}</option>
+            </select>
+
+            <label for="proveedor">Proveedor:</label>
+            <input id="proveedor" [(ngModel)]="nuevoProducto.proveedor" name="proveedor" required>
+
+            <label for="stock_minimo">Stock Mínimo:</label>
+            <input id="stock_minimo" type="number" [(ngModel)]="nuevoProducto.stock_minimo" name="stock_minimo">
+
+            <button type="submit">{{ productoSeleccionado ? 'Actualizar' : 'Agregar' }}</button>
+            <button type="button" *ngIf="productoEditado" (click)="productoEditado = null; nuevoProducto = {}">Cancelar</button>
+        </form>
+    </div>
+
+    <!-- Lista de productos -->
+    <div class="productos-container">
+        <div class="producto-card" *ngFor="let producto of productos">
+            <h3>{{ producto.nombre }}</h3>
+            <p>Precio: {{ producto.precio | currency }}</p>
+            <p>Descripción: {{ producto.descripcion }}</p>
+            <p>Categoría: {{ producto.categoria_id }}</p>
+            <button (click)="seleccionarProducto(producto)"> <i class="fas fa-edit"></i></button>
+            <button (click)="deleteProduct(producto.id)"><i class="fas fa-trash"></i></button>
+        </div>
+    </div>
+</div>

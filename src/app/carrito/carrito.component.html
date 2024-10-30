@@ -1,0 +1,24 @@
+<div class="cart">
+  <h2>Carrito de Compras</h2>
+  <div *ngFor="let item of cartItems">
+    <p>{{ item.quantity }} - {{ item.nombre }} - {{ item.totalPrice | currency:'GTQ':'symbol':'1.2-2' }}</p>
+    <div class="delete-icon" (click)="removeItem(item.id)">
+      <img src="assets/imagenes/Delete-Button.png" alt="delete" />
+    </div>
+  </div>
+  <p>Total de productos: {{ totalItems }}</p>
+
+  <h3>Total: {{ calcularTotal() | currency:'GTQ':'symbol':'1.2-2' }}</h3>
+
+  <h3>Método de Pago</h3>
+  <button>Pagar con PayPal</button>
+  <button (click)="pagarConPortalDePagos()">Pagar con Portal de Pagos</button>
+  
+  <!-- Asegúrate de que el componente tiene un input para controlar su visibilidad -->
+  <app-crear-cuenta *ngIf="formVisible" [isVisible]="formVisible" [cuentaExistente]="cuentaExistente"></app-crear-cuenta>
+
+
+  <button (click)="vaciarCarrito()">
+    <i class="fas fa-trash"></i> Vaciar Carrito
+  </button>
+</div>

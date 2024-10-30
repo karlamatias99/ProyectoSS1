@@ -1,0 +1,248 @@
+<div class="reportes-container">
+    <h1>Reportes</h1>
+    <div class="menu">
+        <h3>Seleccionar Reporte</h3>
+        <ul>
+            <li *ngFor="let option of menuOptions" (click)="onMenuChange(option)">
+                {{ option }}
+            </li>
+        </ul>
+    </div>
+
+    <div class="report-content">
+        <ng-container *ngIf="selectedReport === 'Existencia de Productos'">
+            <h2>Reporte de Existencia de Productos</h2>
+            <form [formGroup]="existenciaForm" (ngSubmit)="getReporteExistencia()">
+                <label for="fecha">Fecha:</label>
+                <input type="date" formControlName="fecha" required>
+                <button type="submit">Obtener Reporte</button>
+            </form>
+            <!-- Tabla para mostrar los resultados -->
+            <div class="table-responsive">
+                <table *ngIf="productosExistencia.length > 0">
+                    <thead>
+                        <tr>
+                            <th>ID</th>
+                            <th>Nombre</th>
+                            <th>Fecha de Creación</th>
+                            <th>Cantidad</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr *ngFor="let producto of productosExistencia">
+                            <td>{{ producto.id }}</td>
+                            <td>{{ producto.nombre }}</td>
+                            <td>{{ producto.fecha_creacion }}</td>
+                            <td>{{ producto.existencia }}</td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+
+            <p *ngIf="productosExistencia.length === 0">No se encontraron productos para la fecha seleccionada.</p>
+        </ng-container>
+
+        <ng-container *ngIf="selectedReport === 'Usuarios Inscritos'">
+            <h2>Reporte de Usuarios Inscritos</h2>
+            <button (click)="getUsuariosInscritos()">Obtener Reporte</button>
+
+            <div class="table-responsive">
+                <table *ngIf="usuarios.length > 0">
+                    <thead>
+                        <tr>
+                            <th>ID</th>
+                            <th>Correo</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr *ngFor="let usuario of usuarios">
+                            <td>{{ usuario.id }}</td>
+                            <td>{{ usuario.correo }}</td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+
+            <p *ngIf="usuarios.length === 0">No se encontraron usuarios inscritos.</p>
+        </ng-container>
+
+        <ng-container *ngIf="selectedReport === 'Productos Vendidos'">
+            <h2>Reporte de Productos Vendidos</h2>
+            <form (ngSubmit)="getProductosVendidos(nombre.value, proveedor.value)">
+                <label for="nombre">Nombre:</label>
+                <input type="text" #nombre>
+
+                <label for="categoria">Categoría:</label>
+                <select #categoria (change)="onCategoriaChange(categoria.value)">
+                    <option value="" disabled selected>Selecciona una categoría</option>
+                    <option *ngFor="let categoria of categorias" [value]="categoria.id">
+                        {{ categoria.nombre }}
+                    </option>
+                </select>
+
+                <label for="proveedor">Proveedor:</label>
+                <input type="text" #proveedor>
+
+                <button type="submit">Obtener Reporte</button>
+            </form>
+
+            <div class="table-responsive">
+                <table *ngIf="productosVendidos.length > 0">
+                    <thead>
+                        <tr>
+                            <th>Nombre del Producto</th>
+                            <th>Proveedor</th>
+                            <th>Descripción</th>
+                            <th>Precio</th>
+                            <th>Cantidad Vendida</th>
+                            <th>Categoría</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr *ngFor="let producto of productosVendidos">
+                            <td>{{ producto.nombre }}</td>
+                            <td>{{ producto.proveedor }}</td>
+                            <td>{{ producto.descripcion }}</td>
+                            <td>{{ producto.precio | currency:'GTQ':'symbol':'1.2-2' }}</td>
+                            <td>{{ producto.cantidad_vendida }}</td>
+                            <td>{{ producto.categoria_nombre }}</td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+
+            <p *ngIf="productosVendidos.length === 0">No se encontraron productos vendidos.</p>
+        </ng-container>
+
+        <ng-container *ngIf="selectedReport === 'Mayormente Vendidos'">
+            <h2>Reporte de Productos Mayormente Vendidos</h2>
+            <button (click)="getMayormenteVendidos()">Obtener Reporte</button>
+
+            <div class="table-responsive">
+                <table *ngIf="mayormenteVendidos && mayormenteVendidos.length > 0">
+                    <thead>
+                        <tr>
+                            <th>ID</th>
+                            <th>Nombre</th>
+                            <th>Categoría</th>
+                            <th>Proveedor</th>
+                            <th>Total Vendidos</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr *ngFor="let producto of mayormenteVendidos">
+                            <td>{{ producto.id }}</td>
+                            <td>{{ producto.nombre }}</td>
+                            <td>{{ producto.categoria_id }}</td>
+                            <td>{{ producto.proveedor }}</td>
+                            <td>{{ producto.total_vendidos | currency:'GTQ':'symbol':'1.2-2'}}</td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+
+            <p *ngIf="mayormenteVendidos.length === 0">No hay productos mayormente vendidos para mostrar.</p>
+        </ng-container>
+
+        <ng-container *ngIf="selectedReport === 'Ventas Generales' && generalVentas.ventas && generalVentas.ventas.length > 0">
+            <h2>Reporte General de Ventas</h2>
+
+            <p>Total Vendido: {{ totalVendido | currency:'GTQ':'symbol':'1.2-2'}}</p>
+
+            <div class="table-responsive">
+                <table>
+                    <thead>
+                        <tr>
+                            <th>ID de Orden</th>
+                            <th>ID de Producto</th>
+                            <th>Nombre del Producto</th>
+                            <th>Cantidad</th>
+                            <th>Total</th>
+                            <th>Fecha de Orden</th>
+                            <th>Estado</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr *ngFor="let venta of generalVentas.ventas">
+                            <td>{{ venta.orden_id }}</td>
+                            <td>{{ venta.producto_id }}</td>
+                            <td>{{ venta.nombre_producto }}</td>
+                            <td>{{ venta.cantidad }}</td>
+                            <td>{{ venta.total | currency:'GTQ':'symbol':'1.2-2' }}</td>
+                            <td>{{ venta.fecha_orden | date: 'short' }}</td>
+                            <td>{{ venta.estado }}</td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+        </ng-container>
+
+        <p *ngIf="!generalVentas.ventas || generalVentas.ventas.length === 0">No hay datos de ventas disponibles.</p>
+
+        <ng-container *ngIf="selectedReport === 'Errores de Compras'">
+            <h2>Reporte de Errores de Compras</h2>
+            <button (click)="getErroresCompras()">Obtener Reporte</button>
+
+            <div class="table-responsive">
+                <table *ngIf="erroresCompras.length > 0">
+                    <thead>
+                        <tr>
+                            <th>ID</th>
+                            <th>Cantidad</th>
+                            <th>Estado</th>
+                            <th>Producto</th>
+                            <th>Total</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr *ngFor="let error of erroresCompras">
+                            <td>{{ error.id }}</td>
+                            <td>{{ error.cantidad }}</td>
+                            <td>{{ error.estado }}</td>
+                            <td>{{ error.producto_id }}</td>
+                            <td>{{ error.total | currency:'GTQ':'symbol':'1.2-2'}}</td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+
+            <p *ngIf="erroresCompras.length === 0">No se encontraron ordenes en estado incompleto.</p>
+        </ng-container>
+
+        <ng-container *ngIf="selectedReport === 'Empleados por Departamento'">
+            <h2>Reporte de Empleados por Departamento</h2>
+        
+            <form (ngSubmit)="getEmpleadosPorDepartamento(departamento.value)">
+                <label for="departamento">Departamento:</label>
+                <input type="text" #departamento>
+                <button type="submit">Obtener Reporte</button>
+            </form>
+        
+            <div class="table-responsive">
+                <table *ngIf="empleados && empleados.length > 0">
+                    <thead>
+                        <tr>
+                            <th>ID</th>
+                            <th>Nombre</th>
+                            <th>Apellido</th>
+                            <th>Departamento</th>
+                            <th>Email</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr *ngFor="let empleado of empleados">
+                            <td>{{ empleado.id }}</td>
+                            <td>{{ empleado.nombre }}</td>
+                            <td>{{ empleado.apellido }}</td>
+                            <td>{{ empleado.departamento }}</td>
+                            <td>{{ empleado.email }}</td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+
+            <p *ngIf="empleados.length === 0">No se encontraron empleados en el departamento seleccionado.</p>
+        </ng-container>
+    </div>
+</div>
+

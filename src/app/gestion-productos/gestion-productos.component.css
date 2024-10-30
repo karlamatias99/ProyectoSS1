@@ -1,0 +1,124 @@
+.gestion-productos {
+    max-width: 9000px; /* Ajusta este valor según sea necesario */
+    margin: 0 auto; /* Centra el contenedor */
+    padding: 20px; /* Espaciado interno */
+}
+
+h2 {
+    text-align: center;
+    margin-bottom: 20px;
+}
+
+.form-container {
+    margin-bottom: 30px;
+    padding: 15px;
+    border: 1px solid #ccc;
+    border-radius: 5px;
+    background-color: #f9f9f9;
+}
+
+label {
+    display: block;
+    margin: 10px 0 5px;
+}
+
+input,
+textarea {
+    width: 100%;
+    padding: 10px;
+    margin-bottom: 15px;
+    border: 1px solid #ccc;
+    border-radius: 4px;
+}
+
+button {
+    padding: 10px 15px;
+    margin-right: 10px;
+    border: none;
+    border-radius: 4px;
+    background-color: #007bff;
+    color: white;
+    cursor: pointer;
+}
+
+button:hover {
+    background-color: #0056b3;
+}
+
+.productos-lista h3 {
+    margin-bottom: 10px;
+}
+
+.productos-lista ul {
+    list-style-type: none;
+    padding: 0;
+}
+
+.productos-lista li {
+    padding: 10px;
+    border: 1px solid #ddd;
+    border-radius: 4px;
+    margin-bottom: 10px;
+}
+
+.productos-lista li h4 {
+    margin: 0;
+}
+
+.productos-lista button {
+    margin-top: 10px;
+    background-color: #dc3545;
+}
+
+.productos-lista button:hover {
+    background-color: #c82333;
+}
+
+.productos-container {
+    display: flex; /* Usar flexbox */
+    flex-wrap: wrap; /* Permitir que los elementos se envuelvan */
+    justify-content: space-between; /* Espaciado entre los elementos */
+    margin: 20px; /* Espaciado externo del contenedor */
+}
+
+.producto-card {
+    background-color: #f9f9f9; /* Color de fondo para la tarjeta */
+    border: 1px solid #ddd; /* Borde alrededor de la tarjeta */
+    border-radius: 8px; /* Esquinas redondeadas */
+    padding: 16px; /* Espaciado interno */
+    margin: 10px; /* Espaciado entre las tarjetas */
+    flex: 1 1 calc(30% - 20px); /* Ajuste del ancho: 30% menos el margen */
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1); /* Sombra suave */
+    transition: transform 0.2s; /* Animación al pasar el mouse */
+}
+
+/* Efecto de elevación al pasar el mouse */
+.producto-card:hover {
+    transform: translateY(-5px);
+}
+
+/* Media Queries para Responsividad */
+@media (max-width: 768px) {
+    .producto-card {
+        flex: 1 1 calc(45% - 20px); /* Ajusta el ancho a un 45% para pantallas medianas */
+    }
+}
+
+@media (max-width: 480px) {
+    .producto-card {
+        flex: 1 1 100%; /* Ajusta el ancho a 100% para pantallas pequeñas */
+    }
+
+    .form-container {
+        padding: 10px; /* Reduce el espaciado interno en formularios en pantallas pequeñas */
+    }
+
+    h2 {
+        font-size: 1.5em; /* Tamaño de fuente más pequeño en pantallas pequeñas */
+    }
+
+    button {
+        width: 100%; /* Botones de ancho completo en pantallas pequeñas */
+        margin: 5px 0; /* Espaciado entre botones */
+    }
+}

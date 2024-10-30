@@ -1,0 +1,155 @@
+.product-detail-container {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  padding: 20px; /* Cambié a 20px para móviles */
+}
+
+/* Contenedor de detalle del producto */
+.product-detail {
+  display: flex;
+  flex-direction: row; /* Flex-direction: row para pantallas grandes */
+  width: 100%;
+  max-width: 1200px; /* Ajusta el ancho máximo para pantallas grandes */
+  margin: 0 auto;
+  border: 1px solid #ddd;
+  border-radius: 8px;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+  padding: 20px;
+  background-color: #fff;
+}
+
+/* Contenedor de imagen */
+.image-container {
+  flex: 1;
+  margin-right: 20px; /* Espaciado reducido en pantallas más pequeñas */
+}
+
+/* Estilo de la imagen */
+.product-image {
+  width: 100%; /* Asegura que la imagen use el 100% del contenedor */
+  max-width: 400px;
+  border-radius: 8px;
+  cursor: pointer;
+}
+
+/* Información del producto */
+.product-info {
+  flex: 2;
+}
+
+/* Título del producto */
+.product-title {
+  font-size: 2.4em; /* Tamaño de fuente ajustado */
+  margin-bottom: 10px;
+  color: #333;
+}
+
+/* Descripción del producto */
+.product-description {
+  margin-bottom: 20px;
+  color: #555;
+}
+
+/* Estilo del precio */
+.price {
+  font-weight: bold;
+  font-size: 1.5em; /* Tamaño de fuente ajustado */
+  color: #0b3460;
+  margin-bottom: 20px;
+}
+
+/* Estilo de los botones */
+.btn {
+  padding: 10px 15px;
+  border: none;
+  border-radius: 5px;
+  cursor: pointer;
+  font-weight: bold;
+}
+
+/* Estilo para el botón "Agregar al carrito" */
+.add-to-cart {
+  background-color: #28a745;
+  color: white;
+  margin-right: 10px;
+}
+
+/* Estilo para el botón "Regresar" */
+.go-back {
+  background-color: #007BFF;
+  color: white;
+}
+
+/* Efectos de hover para botones */
+.add-to-cart:hover {
+  background-color: #218838;
+}
+
+.go-back:hover {
+  background-color: #0056b3;
+}
+
+/* Estilos para el modal de zoom */
+.zoom-modal {
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background-color: rgba(0, 0, 0, 0.8);
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  z-index: 1000;
+}
+
+/* Imagen zoom */
+.zoomed-image {
+  max-width: 90%;
+  max-height: 90%;
+  border: 2px solid white;
+  cursor: pointer;
+}
+
+/* Media Queries para Responsividad */
+@media (max-width: 768px) {
+  .product-detail {
+    flex-direction: column; /* Cambia a columna para pantallas pequeñas */
+  }
+
+  .image-container {
+    margin-right: 0; /* Elimina el margen a la derecha */
+    margin-bottom: 20px; /* Añade margen inferior para separación */
+  }
+
+  .product-title {
+    font-size: 2em; /* Tamaño de fuente del título ajustado para pantallas pequeñas */
+  }
+
+  .price {
+    font-size: 1.2em; /* Tamaño de fuente del precio ajustado para pantallas pequeñas */
+  }
+
+  .product-image {
+    max-width: 100%; /* Asegura que la imagen use el 100% en pantallas pequeñas */
+  }
+}
+
+@media (max-width: 480px) {
+  .product-title {
+    font-size: 1.5em; /* Tamaño de fuente más pequeño */
+  }
+
+  .product-description {
+    font-size: 0.9em; /* Tamaño de fuente de la descripción más pequeño */
+  }
+
+  .price {
+    font-size: 1em; /* Tamaño de fuente del precio más pequeño */
+  }
+
+  .btn {
+    padding: 8px 10px; /* Ajusta el espaciado interno de los botones */
+  }
+}

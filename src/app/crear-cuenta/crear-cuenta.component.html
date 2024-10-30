@@ -1,0 +1,38 @@
+<div class="modal" *ngIf="isVisible">
+    <div class="modal-content">
+      <span class="close" (click)="cerrarModal()">&times;</span>
+      <h2>Crear Cuenta</h2>
+      <form (ngSubmit)="crearCuenta()" #crearCuentaForm="ngForm">
+        <div>
+          <label for="correo">Correo Electrónico:</label>
+          <input type="email" id="correo" [(ngModel)]="correo" name="correo" required />
+        </div>
+        
+        <div>
+          <label for="nombreBanco">Nombre del Banco:</label>
+          <input type="text" id="nombreBanco" [(ngModel)]="nombreBanco" name="nombreBanco" required />
+        </div>
+        
+        <div>
+          <label for="tipoCuenta">Tipo de Cuenta:</label>
+          <select id="tipoCuenta" [(ngModel)]="tipoCuenta" name="tipoCuenta" required>
+            <option value="" disabled selected>Seleccione un tipo de cuenta</option>
+            <option value="bancaria">Bancaria</option>
+            <option value="credito">Crédito</option>
+          </select>
+        </div>
+  
+        <div class="notify-label">
+          <label>
+            <input type="checkbox" [(ngModel)]="notifyMe" name="notifyMe" />
+            Notify me (enviar correo cada vez que se use la tarjeta de crédito)
+          </label>
+        </div>
+        
+        <button type="submit">Crear Cuenta</button>
+      </form>
+  
+      <p *ngIf="cuentaCreada">¡Cuenta creada exitosamente!</p>
+    </div>
+  </div>
+  

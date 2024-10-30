@@ -1,0 +1,34 @@
+<app-navbar></app-navbar>
+
+<div *ngIf="product; else loading" class="product-detail-container">
+  <div class="product-detail">
+    <div class="image-container">
+      <img [src]="product.imagen" alt="{{ product.nombre }}" class="product-image" (click)="zoomImage(product.imagen)" />
+    </div>
+    <div class="product-info">
+      <h2 class="product-title">{{ product.nombre }}</h2>
+      <p class="product-description">{{ product.descripcion }}</p>
+      <p class="price"> Existencia: {{ product.existencia }}</p>
+      <p class="price">Categoría: {{ product.categoria_nombre }}</p>
+      <p class="price">Proveedor: {{ product.proveedor }}</p>
+      <p class="price">Precio: Q{{ product.precio }}</p>
+      
+      <button class="btn add-to-cart" (click)="addToCart(product)">
+        <i class="fas fa-shopping-cart"></i> <!-- Ícono de carrito de compras -->
+      </button>
+      
+      <button class="btn go-back" (click)="goBack()">
+        <i class="fas fa-arrow-left"></i> <!-- Ícono de flecha hacia atrás -->
+      </button> <!-- Botón para volver a la página anterior -->
+    </div>
+  </div>
+</div>
+
+<ng-template #loading>
+  <p>Cargando detalles del producto...</p>
+</ng-template>
+
+<!-- Modal para hacer zoom en la imagen -->
+<div *ngIf="isZoomed" class="zoom-modal" (click)="closeZoom()">
+  <img [src]="zoomedImage" alt="Zoomed image" class="zoomed-image" />
+</div>

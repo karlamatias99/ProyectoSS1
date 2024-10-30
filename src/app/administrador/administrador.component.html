@@ -1,0 +1,26 @@
+<div class="header">
+    <div class="logo">
+        <img src="ruta-del-logo.png" alt="Logo de la tienda" />
+    </div>
+    <div class="menu">
+        <a (click)="setActiveSection('productos')">Gestión de Productos</a>
+        <a (click)="setActiveSection('redes')">Redes Sociales</a>
+        <a (click)="setActiveSection('reportes')">Reportes</a>
+    </div>
+    <div class="user-menu">
+        <div class="dropdown">
+            <img src="assets/imagenes/usuario.png" alt="Perfil de usuario" class="user-avatar" (click)="toggleDropdown()" />
+            <div class="dropdown-content">
+                <a (click)="cerrarSesion()">
+                    <i class="fas fa-sign-out-alt"></i> Cerrar Sesión
+                </a>
+            </div>
+        </div>
+    </div>
+</div>
+
+<div class="contenido">
+    <app-gestion-productos *ngIf="activeSection === 'productos'"></app-gestion-productos>
+    <app-redes-sociales *ngIf="activeSection === 'redes'"></app-redes-sociales>
+    <app-reportes *ngIf="activeSection === 'reportes'"></app-reportes>
+</div>

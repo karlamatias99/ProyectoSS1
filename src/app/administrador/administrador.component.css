@@ -1,0 +1,178 @@
+/* Estilo general para el cuerpo */
+body {
+  font-family: 'Arial', sans-serif;
+  background-color: #f4f4f4; /* Color de fondo suave */
+  margin: 0;
+  padding: 0;
+}
+
+/* Estilo del encabezado */
+.header {
+  display: flex; /* Alinear elementos en fila */
+  align-items: center; /* Centrar verticalmente */
+  justify-content: space-between; /* Espaciar elementos */
+  background-color: #000000; /* Color de fondo negro */
+  padding: 10px 20px; /* Espaciado interno */
+}
+
+/* Estilo del logo */
+.logo img {
+  height: 40px; /* Altura del logo */
+}
+
+/* Estilo del menú principal */
+.menu {
+  display: flex; /* Alinear los elementos en fila */
+}
+
+/* Estilo para los enlaces del menú */
+.menu a {
+  color: white; /* Color del texto */
+  text-decoration: none; /* Sin subrayado */
+  margin: 0 20px; /* Espaciado entre enlaces */
+  padding: 10px 15px; /* Espaciado interno */
+  border-radius: 5px; /* Bordes redondeados */
+  transition: background-color 0.3s, transform 0.3s; /* Transiciones suaves */
+}
+
+/* Efecto hover para los enlaces del menú */
+.menu a:hover {
+  background-color: #40464d; /* Color de fondo al pasar el mouse */
+  transform: translateY(-2px); /* Levantar ligeramente el botón */
+}
+
+/* Estilo del menú de usuario */
+.user-menu {
+  display: flex; /* Alinear elementos en fila */
+  align-items: center; /* Centrar verticalmente */
+}
+
+/* Estilo de la imagen del perfil como botón */
+.user-avatar {
+  width: 40px; /* Ancho del avatar */
+  height: 40px; /* Alto del avatar */
+  border-radius: 50%; /* Hacer el avatar circular */
+  cursor: pointer; /* Cambiar cursor al pasar el mouse */
+  margin-right: 10px; /* Espaciado a la derecha */
+}
+
+/* Estilo del contenido */
+.contenido {
+  max-width: 800px; /* Ancho máximo del contenido */
+  margin: 20px auto; /* Centrar el contenido */
+  padding: 20px; /* Espaciado interno */
+  background-color: white; /* Fondo blanco */
+  border-radius: 8px; /* Bordes redondeados */
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1); /* Sombra suave */
+}
+
+/* Estilo del contenido del menú desplegable */
+.dropdown {
+  position: relative; /* Posicionar el contenedor */
+}
+
+/* Estilo del contenido del menú desplegable */
+.dropdown-content {
+  display: none; /* Ocultar el menú por defecto */
+  position: absolute; /* Posicionar absolutamente */
+  background-color: white; /* Fondo blanco */
+  min-width: 160px; /* Ancho mínimo */
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.2); /* Sombra suave */
+  z-index: 1; /* Asegurar que el menú esté por encima */
+  right: 0; /* Alinear el menú a la derecha */
+}
+
+/* Mostrar el menú al hacer clic en el botón */
+.dropdown:hover .dropdown-content,
+.dropdown-content.show {
+  display: block; /* Mostrar el menú */
+}
+
+/* Estilo de los enlaces en el menú desplegable */
+.dropdown-content a {
+  color: #333; /* Color del texto */
+  padding: 12px 16px; /* Espaciado interno */
+  text-decoration: none; /* Sin subrayado */
+  display: block; /* Mostrar como bloque */
+  cursor: pointer;
+}
+
+/* Efecto hover para los enlaces del menú desplegable */
+.dropdown-content a:hover {
+  background-color: #f1f1f1; /* Color de fondo al pasar el mouse */
+}
+
+/* Estilo para los encabezados de los componentes */
+.contenido h2 {
+  margin: 0 0 20px; /* Espaciado inferior */
+  font-size: 24px; /* Tamaño de fuente */
+  color: #333; /* Color del texto */
+}
+
+/* Estilo de texto dentro de los componentes */
+.contenido p {
+  line-height: 1.6; /* Espaciado entre líneas */
+  color: #555; /* Color del texto */
+}
+
+/* Media Queries para Responsividad */
+@media (max-width: 768px) {
+  /* Estilo del encabezado */
+  .header {
+    flex-direction: column; /* Cambiar a columna en pantallas pequeñas */
+    align-items: flex-start; /* Alinear elementos a la izquierda */
+  }
+
+  /* Estilo del menú principal */
+  .menu {
+    flex-direction: column; /* Cambiar a columna en pantallas pequeñas */
+    align-items: flex-start; /* Alinear elementos a la izquierda */
+    width: 100%; /* Ancho completo */
+  }
+
+  /* Espaciado entre enlaces del menú */
+  .menu a {
+    margin: 10px 0; /* Espaciado vertical entre enlaces */
+  }
+
+  /* Ajustes de contenido */
+  .contenido {
+    padding: 10px; /* Reducir espaciado interno */
+    margin: 10px; /* Reducir margen */
+    max-width: 95%; /* Ancho máximo reducido */
+  }
+
+  /* Ajustes para los encabezados */
+  .contenido h2 {
+    font-size: 20px; /* Tamaño de fuente más pequeño */
+  }
+
+  /* Ajustes para el avatar de usuario */
+  .user-avatar {
+    width: 35px; /* Ancho reducido */
+    height: 35px; /* Alto reducido */
+  }
+}
+
+@media (max-width: 480px) {
+  /* Ajustes adicionales para pantallas más pequeñas */
+  .header {
+    padding: 10px; /* Espaciado interno reducido */
+  }
+
+  /* Ajustes para los enlaces del menú */
+  .menu a {
+    font-size: 14px; /* Tamaño de fuente más pequeño */
+    padding: 8px 10px; /* Espaciado interno reducido */
+  }
+
+  /* Ajustes para los encabezados */
+  .contenido h2 {
+    font-size: 18px; /* Tamaño de fuente más pequeño */
+  }
+
+  /* Estilo de texto dentro de los componentes */
+  .contenido p {
+    font-size: 14px; /* Tamaño de fuente más pequeño */
+  }
+}
