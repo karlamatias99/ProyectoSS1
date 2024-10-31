@@ -13,12 +13,14 @@
   <h3>Método de Pago</h3>
   <button>Pagar con PayPal</button>
   <button (click)="pagarConPortalDePagos()">Pagar con Portal de Pagos</button>
-  
-  <!-- Asegúrate de que el componente tiene un input para controlar su visibilidad -->
-  <app-crear-cuenta *ngIf="formVisible" [isVisible]="formVisible" [cuentaExistente]="cuentaExistente"></app-crear-cuenta>
-
 
   <button (click)="vaciarCarrito()">
     <i class="fas fa-trash"></i> Vaciar Carrito
   </button>
 </div>
+
+<div class="modal" [ngClass]="{'show': formVisible}" (click)="formVisible = false">
+  <div class="modal-content" (click)="$event.stopPropagation()">
+    <span class="close" (click)="formVisible = false">&times;</span>
+    <app-payment [isVisible]="formVisible" (pagoProcesado)="pagarConPortalDePagos()" [totalCompra]="totalCompra"></app-payment>
+  </div>

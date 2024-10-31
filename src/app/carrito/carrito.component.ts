@@ -6,26 +6,38 @@ import { HttpClient } from '@angular/common/http';
 import { BancoMockService } from '../banco-mock.service';
 import { AutenticacionService } from '../autenticacion.service';
 import { CrearCuentaComponent } from '../crear-cuenta/crear-cuenta.component';
+import { PaymentComponent } from '../payment/payment.component';
 
 
 @Component({
   selector: 'app-carrito',
   standalone: true,
-  imports: [FormsModule, NgFor, NgIf, CommonModule, CrearCuentaComponent],
+  imports: [FormsModule, NgFor, NgIf, CommonModule, CrearCuentaComponent, PaymentComponent],
   templateUrl: './carrito.component.html',
   styleUrl: './carrito.component.css'
 })
-export class CarritoComponent implements OnInit{
+export class CarritoComponent implements OnInit {
   public userCorreo: string | null = null;
   cuentaExistente: boolean = false;
   formVisible: boolean = false; // Para mostrar el formulario de creación de cuenta
+  totalCompra: number = 0; 
 
+  private readonly PAYMENT_GATEWAYS = [
+    {
+      name: 'Portal de Pagos 1',
+      url: 'https://optimal-specially-fox.ngrok-free.app/api/transactions',
+    },
+    {
+      name: 'Portal de Pagos 2',
+      url: 'https://optimal-specially-fox.ngrok-free.app/api/transactions',
+    }
+  ]
 
-  constructor(private cartService: CarritoService, private http: HttpClient, private bancoServiceMock: BancoMockService, private authService: AutenticacionService) {}
+  constructor(private cartService: CarritoService, private http: HttpClient, private bancoServiceMock: BancoMockService, private authService: AutenticacionService) { }
 
   ngOnInit() {
     this.userCorreo = this.authService.getUserCorreo();
-  
+
   }
 
 
@@ -40,93 +52,61 @@ export class CarritoComponent implements OnInit{
   removeItem(id: string) {
     this.cartService.removeItem(id);
   }
-  
+
   pagar() {
     const detallesCarrito = this.cartService.getCartDetails();
-    
-    const url = ''; 
+    const token = localStorage.getItem('paymentAccessToken');
+
+    // Imprimir el token en la consola
+    console.log('Token de la pasarela:', token);
+
+    if (!token) {
+      console.error('No se pudo realizar el pago porque el token es nulo o indefinido.');
+      // Aquí puedes agregar un mensaje para el usuario o realizar otra acción
+      return; // Salir si no hay token
+    }
 
     const payload = {
       items: detallesCarrito,
       total: this.calcularTotal()
     };
 
-    // Realiza la solicitud POST a la pasarela de pagos
-    this.http.post(url, payload)
-      .subscribe({
-        next: (response) => {
-          // Maneja la respuesta de la pasarela de pagos
-          console.log('Pago realizado exitosamente', response);
-          // Puedes redirigir al usuario o limpiar el carrito
-        },
-        error: (error) => {
-          // Maneja errores
-          console.error('Error al realizar el pago', error);
-        }
-      });
+    this.intentarPago(payload, token);
   }
+
+  private async intentarPago(payload: any, token: string | null) {
+    if (!token) {
+      console.error('No se pudo realizar el pago porque el token es nulo.');
+      return; // Salir si no hay token
+    }
+
+    for (const gateway of this.PAYMENT_GATEWAYS) {
+      try {
+        const response = await this.http.post(gateway.url, payload, {
+          headers: {
+            Authorization: `Bearer ${token}` // Añadir el token de autorización
+          }
+        }).toPromise();
+
+        console.log(`Pago realizado exitosamente en ${gateway.name}`, response);
+        return; // Salir del bucle si el pago es exitoso
+      } catch (error) {
+        console.error(`Error al realizar el pago en ${gateway.name}:`, error);
+      }
+    }
+
+    console.error('Ambas pasarelas de pago fallaron. Intente nuevamente más tarde.');
+  }
+
 
   pagarConPortalDePagos() {
-    //console.log("cuenta a verificar" + this.userCorreo)
-    this.verificarCuenta(); // Verifica la cuenta cuando se selecciona el portal de pagos
-  }
-
-  verificarCuenta() {
-    console.log('Verificando cuenta para:', this.userCorreo); // Añade log para verificar el correo
-
-    this.bancoServiceMock.verificarCuenta(this.userCorreo).subscribe({
-      next: (response) => {
-        console.log('Respuesta de verificación:', response); // Log de la respuesta
-        if (response.existe) {
-          this.cuentaExistente = true; // Cuenta existe
-          this.formVisible = false; // No mostrar formulario
-          //this.realizarPago(); // Llama al método para realizar el pago
-        } else {
-          this.cuentaExistente = false; // Cuenta no existe
-          this.formVisible = true; // Muestra el formulario para crear cuenta
-          console.log('La cuenta no existe, mostrando formulario.'); // Log para depuración
-        }
-      },
-      error: (error) => {
-        console.error('Error al verificar la cuenta', error);
-      }
-    });
-  }
-
-  crearCuenta(cuentaData: any) {
-    this.bancoServiceMock.crearCuenta(cuentaData).subscribe({
-      next: (response) => {
-        console.log(response.mensaje); // Mensaje de éxito
-        this.formVisible = false; // Oculta el formulario después de crear la cuenta
-      },
-      error: (error) => {
-        console.error('Error al crear la cuenta', error);
-      }
-    });
+    this.totalCompra = this.calcularTotal(); // Asigna el total de la compra
+    this.formVisible = true;
   }
 
 
-  realizarPago() {
-    const detallesCarrito = this.cartService.getCartDetails();
-    
-    const url = ''; // Aquí coloca el endpoint para realizar el pago
 
-    const payload = {
-      items: detallesCarrito,
-      total: this.calcularTotal()
-    };
 
-    // Realiza la solicitud POST a la pasarela de pagos
-    this.http.post(url, payload)
-      .subscribe({
-        next: (response) => {
-          console.log('Pago realizado exitosamente', response);
-        },
-        error: (error) => {
-          console.error('Error al realizar el pago', error);
-        }
-      });
-  }
 
   calcularTotal() {
     return this.cartItems.reduce((total, item) => total + item.totalPrice * item.quantity, 0);

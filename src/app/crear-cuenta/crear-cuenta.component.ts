@@ -1,4 +1,4 @@
-import { Component, Input } from '@angular/core';
+import { Component, EventEmitter, Input, Output } from '@angular/core';
 import { BancoService } from '../banco.service';
 import { BancoMockService } from '../banco-mock.service';
 import { NgIf } from '@angular/common';
@@ -14,12 +14,14 @@ import { FormsModule, NgModel } from '@angular/forms';
 
 export class CrearCuentaComponent {
   @Input() isVisible: boolean = false; // Propiedad para controlar la visibilidad del modal
+  @Input() cuentaExistente: boolean = false; // Indica si la cuenta ya existe
+  @Output() cuentaCreada = new EventEmitter<any>(); 
   correo: string = '';
   nombreBanco: string = '';
   tipoCuenta: string = '';
-  cuentaCreada: boolean = false;
+  //cuentaCreada: boolean = false;
   notifyMe: boolean = false;
-  
+  pin: string = '';
 
   constructor(private bancoService: BancoMockService) {}
 
@@ -28,24 +30,23 @@ export class CrearCuentaComponent {
       correo: this.correo,
       nombreBanco: this.nombreBanco,
       tipoCuenta: this.tipoCuenta,
-      notifyMe: this.notifyMe 
+      notifyMe: this.notifyMe
     };
-
-    this.bancoService.crearCuenta(cuentaData).subscribe({
-      next: (response) => {
-        console.log('Cuenta creada exitosamente', response);
-        this.cuentaCreada = true;
-        this.limpiarFormulario();
-      },
-      error: (error) => {
-        console.error('Error al crear la cuenta', error);
-      }
-    });
+    this.cuentaCreada.emit(cuentaData);
   }
+
+  // Método para verificar PIN
+  verificarPin() {
+    // Aquí iría la lógica para verificar el PIN ingresado
+    console.log('PIN ingresado:', this.pin);
+    // Implementa la lógica de verificación del PIN
+  }
+
+
 
   cerrarModal() {
     this.isVisible = false; // Cierra el modal
-    this.cuentaCreada = false; // Reinicia el estado de cuenta creada
+   // this.cuentaCreada = false; // Reinicia el estado de cuenta creada
   }
 
   limpiarFormulario() {

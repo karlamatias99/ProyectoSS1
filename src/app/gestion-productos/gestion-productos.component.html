@@ -43,7 +43,7 @@
     <div class="productos-container">
         <div class="producto-card" *ngFor="let producto of productos">
             <h3>{{ producto.nombre }}</h3>
-            <p>Precio: {{ producto.precio | currency }}</p>
+            <p>Precio: {{ producto.precio | currency:'GTQ':'symbol':'1.2-2' }}</p>
             <p>Descripción: {{ producto.descripcion }}</p>
             <p>Categoría: {{ producto.categoria_id }}</p>
             <button (click)="seleccionarProducto(producto)"> <i class="fas fa-edit"></i></button>

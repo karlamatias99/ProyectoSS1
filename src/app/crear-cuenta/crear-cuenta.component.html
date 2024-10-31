@@ -1,6 +1,20 @@
-<div class="modal" *ngIf="isVisible">
-    <div class="modal-content">
-      <span class="close" (click)="cerrarModal()">&times;</span>
+<div class="modal" [class.hidden]="!isVisible" (click)="cerrarModal()">
+  <div class="modal-content" (click)="$event.stopPropagation()">
+    <span class="close" (click)="cerrarModal()">&times;</span>
+
+    <!-- Contenido del modal aquí -->
+    <div *ngIf="cuentaExistente">
+      <h2>Verificación de PIN</h2>
+      <form (ngSubmit)="verificarPin()">
+        <div>
+          <label for="pin">Ingrese su PIN:</label>
+          <input type="password" id="pin" [(ngModel)]="pin" name="pin" required />
+        </div>
+        <button type="submit">Verificar PIN</button>
+      </form>
+    </div>
+
+    <div *ngIf="!cuentaExistente">
       <h2>Crear Cuenta</h2>
       <form (ngSubmit)="crearCuenta()" #crearCuentaForm="ngForm">
         <div>
@@ -21,7 +35,7 @@
             <option value="credito">Crédito</option>
           </select>
         </div>
-  
+
         <div class="notify-label">
           <label>
             <input type="checkbox" [(ngModel)]="notifyMe" name="notifyMe" />
@@ -31,8 +45,6 @@
         
         <button type="submit">Crear Cuenta</button>
       </form>
-  
-      <p *ngIf="cuentaCreada">¡Cuenta creada exitosamente!</p>
     </div>
   </div>
-  
+</div>

@@ -155,16 +155,19 @@ export class LoginComponent implements OnInit {
     this.banderaAciertoLogin = false;
     this.banderaErrorLogin = false;
 
-    // Utilizar el servicio para iniciar sesión
+    // Utilizar el servicio para iniciar sesión en tu tienda
     this.usuarioServiceAut.login(this.formLogin.value).subscribe((r) => {
       console.log('Respuesta del servidor:', r); // Muestra la respuesta del servidor
 
       if (r && r.estado) {
         // Si el estado es true, el usuario está autenticado correctamente
         this.banderaAciertoLogin = true;
-        this.authService.saveToken(r.token); // Guardar el token
+        this.authService.saveToken(r.token); // Guardar el token de tu tienda
 
         this.mensajeLogin = r.respuesta;
+
+        // Aquí iniciar sesión en la pasarela de pago
+        //this.loginEnPasarela(r.usuario.username, this.formLogin.value.password); // Usar el nombre de usuario y la contraseña
 
         // Redirigir a la página correspondiente según el rol del usuario
         if (r.usuario.rol === 'cliente') {
@@ -195,6 +198,31 @@ export class LoginComponent implements OnInit {
       }
     });
   }
+
+  // Función para iniciar sesión en la pasarela de pago
+  private loginEnPasarela(username: string, password: string): void {
+    fetch('https://optimal-specially-fox.ngrok-free.app/api/auth/login', {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json',
+      },
+      body: JSON.stringify({ username, password }),
+    })
+      .then(response => response.json())
+      .then(data => {
+        if (data.accessToken) {
+          // Guardar el token de la pasarela de pago
+          localStorage.setItem('paymentAccessToken', data.accessToken);
+          console.log('Login en pasarela de pago exitoso:', data);
+        } else {
+          console.error('Error al iniciar sesión en la pasarela de pago:', data);
+        }
+      })
+      .catch(error => {
+        console.error('Error de red al intentar iniciar sesión en la pasarela de pago:', error);
+      });
+  }
+
 
 
   public crearUsuario(): void {

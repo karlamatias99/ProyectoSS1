@@ -1,37 +1,124 @@
-.cart {
-    padding: 20px;
-    background-color: #f9f9f9;
-    border-radius: 8px;
-    box-shadow: 0 2px 10px rgba(0, 0, 0, 0.2);
+/* Fondo del modal */
+.modal {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  position: fixed;
+  z-index: 9999;
+  left: 0;
+  top: 0;
+  width: 100%;
+  height: 100%;
+}
+
+.hidden {
+  display: none;
+}
+
+/* Contenido del modal */
+.modal-content {
+  background-color: #fff;
+  border-radius: 15px;
+  padding: 25px 40px;
+  width: 450px; /* Asegura un ancho consistente */
+  min-width: 400px;
+  max-height: 90vh;
+  overflow-y: auto;
+  position: relative;
+  pointer-events: auto; /* Permite la interacción solo en el modal */
+}
+
+
+
+/* Botón de cerrar */
+.close {
+  position: absolute;
+  top: 15px;
+  right: 15px;
+  font-size: 24px;
+  font-weight: bold;
+  color: #333;
+  cursor: pointer;
+}
+
+.close:hover {
+  color: #e74c3c; /* Cambia a rojo suave al pasar el ratón */
+}
+
+/* Estilo del título */
+.modal-content h2 {
+  font-size: 24px;
+  color: #333;
+  margin-bottom: 20px;
+}
+
+/* Estilo del formulario */
+.modal-content form div {
+  margin-bottom: 15px;
+}
+
+/* Campos de entrada */
+.modal-content input[type="email"],
+.modal-content input[type="text"],
+.modal-content select {
+  width: 100%;
+  padding: 10px;
+  border: 1px solid #ddd;
+  border-radius: 8px;
+  font-size: 14px;
+  color: #555;
+  transition: border-color 0.3s ease;
+}
+
+.modal-content input[type="email"]:focus,
+.modal-content input[type="text"]:focus,
+.modal-content select:focus {
+  border-color: #3498db; /* Cambia a azul claro cuando se enfoca */
+  outline: none;
+}
+
+/* Botón del formulario */
+.modal-content button[type="submit"] {
+  width: 100%;
+  padding: 12px;
+  background-color: #3498db; /* Azul */
+  border: none;
+  border-radius: 8px;
+  color: #fff;
+  font-size: 16px;
+  cursor: pointer;
+  transition: background-color 0.3s ease, box-shadow 0.3s ease;
+}
+
+.modal-content button[type="submit"]:hover {
+  background-color: #2980b9; /* Azul más oscuro al pasar el ratón */
+  box-shadow: 0 4px 15px rgba(52, 152, 219, 0.3); /* Sombra adicional */
+}
+
+/* Checkbox */
+.modal-content .notify-label {
+  display: flex;
+  align-items: center;
+  margin-bottom: 15px;
+}
+
+.modal-content .notify-label input {
+  margin-right: 10px;
+}
+
+.modal-content p {
+  color: #27ae60;
+  font-weight: bold;
+}
+
+/* Animación de entrada */
+@keyframes slideIn {
+  from {
+    transform: translateY(-20px);
+    opacity: 0;
   }
-  
-  .modal {
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    position: fixed;
-    z-index: 999; /* Asegúrate de que esté por encima de otros elementos */
-    left: 0;
-    top: 0;
-    width: 100%;
-    height: 100%;
-    overflow: auto;
-    background-color: rgba(0, 0, 0, 0.8); /* Fondo oscuro */
+  to {
+    transform: translateY(0);
+    opacity: 1;
   }
-  
-  .modal-content {
-    background-color: #fff;
-    border-radius: 8px;
-    padding: 20px;
-    box-shadow: 0 2px 10px rgba(0, 0, 0, 0.3);
-    width: 350px; /* Ajusta según sea necesario */
-    max-height: 90vh; /* Limitar altura para evitar overflow */
-    overflow-y: auto; /* Scroll si el contenido es muy largo */
-  }
-  
-  .close {
-    cursor: pointer;
-    float: right;
-    font-size: 1.5em;
-  }
-  
+}

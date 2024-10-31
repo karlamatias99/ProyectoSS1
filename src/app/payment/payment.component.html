@@ -1,0 +1,64 @@
+<div *ngIf="mensajeError" class="alert alert-danger">
+    {{ mensajeError }}
+  </div>
+  
+  <div *ngIf="mensajeExito" class="alert alert-success">
+    {{ mensajeExito }}
+  </div>
+  
+<div class="modal" [class.hidden]="!isVisible" (click)="cerrarModal()">
+    <div class="modal-content" (click)="$event.stopPropagation()">
+
+        <div class="payment-modal">
+            <h2>Seleccionar Método de Pago</h2>
+
+            <div>
+                <label for="metodoPago">Método de Pago:</label>
+                <select id="metodoPago" [(ngModel)]="metodoPago" (change)="onMetodoPagoChange()" required>
+                    <option value="" disabled selected>Seleccione un método de pago</option>
+                    <option value="cuenta">Cuenta</option>
+                    <option value="tarjeta">Tarjeta</option>
+                </select>
+            </div>
+
+            <div *ngIf="metodoPago === 'cuenta'">
+                <h3>Detalles de Cuenta</h3>
+                <div>
+                    <label for="tipoCuenta">Tipo de Cuenta:</label>
+                    <select id="tipoCuenta" [(ngModel)]="tipoCuenta" name="tipoCuenta" required>
+                        <option value="" disabled selected>Seleccione el tipo de cuenta</option>
+                        <option value="ahorro">Ahorro</option>
+                        <option value="monetario">Monetario</option>
+                    </select>
+                </div>
+
+                <div>
+                    <label for="numeroCuenta">Número de Cuenta:</label>
+                    <input type="text" id="numeroCuenta" [(ngModel)]="numeroCuenta" name="numeroCuenta" required />
+                </div>
+                <div>
+                    <label for="numeroCuenta">Nombre Banco:</label>
+                    <input type="text" id="nombreBanco" [(ngModel)]="nombreBanco" name="nombreBanco" required />
+                </div>
+            
+            </div>
+
+            <div *ngIf="metodoPago === 'tarjeta'">
+                <h3>Detalles de Tarjeta</h3>
+                <div>
+                    <label for="numeroTarjeta">Número de Tarjeta:</label>
+                    <input type="text" id="numeroTarjeta" [(ngModel)]="numeroTarjeta" name="numeroTarjeta" required />
+                </div>
+                <div>
+                    <label for="fechaVencimiento">Fecha de Vencimiento:</label>
+                    <input type="month" id="fechaVencimiento" [(ngModel)]="fechaVencimiento" name="fechaVencimiento"
+                        required />
+                </div>
+                <div>
+                    <label for="cvv">CVV:</label>
+                    <input type="text" id="cvv" [(ngModel)]="cvv" name="cvv" required />
+                </div>
+            </div>
+
+            <button (click)="procesarPago()">Procesar Pago</button>
+        </div>
